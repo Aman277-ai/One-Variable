@@ -3,7 +3,7 @@ import os
 
 os.system("cls")
 
-inputStr = input("Enter the equation with only one variable:")
+inputStr = input("Enter the equation with only one variable: ")
 spaceRemovedStr = SpaceRemover.spaceRemover(inputStr)
 operatorOfVar : str = Calculations.calculations(spaceRemovedStr)[1]
 answer = Calculations.calculations(spaceRemovedStr)[0]
