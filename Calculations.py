@@ -1,6 +1,7 @@
 def calculations(spaceRemovedStr : str):
     
     var = variable(spaceRemovedStr)
+    print("Value of " + var + " is equal to:")
     leftSide = spaceRemovedStr[:spaceRemovedStr.find('=')]
     rightSide = spaceRemovedStr[spaceRemovedStr.find('=') + 1 : len(spaceRemovedStr)]
     
@@ -23,11 +24,16 @@ def calculations(spaceRemovedStr : str):
 
         elif x == '/':
             operatorOfVar = '/'
-            break
-    
+            break    
     numOfVar : str = leftSideTemp[leftSideTemp.find(var) + 1 : leftSideTemp.find(operatorOfVar)]
-    if leftSideTemp.find(operatorOfVar) == 0:
+    numOfVar = numOfVar[ : : -1]
+    if leftSide[leftSide.find(var)+1 : leftSide.find(var) + 2] == '/':
+        operatorOfVar = ""
+        numOfVar = ""
+    elif leftSideTemp.find(operatorOfVar) == 0:
         numOfVar = leftSideTemp[leftSideTemp.find(var) + 1]
+    else:
+        numOfVar = ""
     
     answer : float = None
     if operatorOfVar == '+' or operatorOfVar == '-':
@@ -37,7 +43,7 @@ def calculations(spaceRemovedStr : str):
             if eval(leftSide) == 0:
                 answer = answer * -1
         else:
-            leftSide = leftSide.replace(var, "")
+            leftSide = leftSide.replace(leftSide[len(leftSide) - leftSideTemp.find(operatorOfVar) : leftSide.find(var) + 1 ], "0")
             answer = (eval(rightSide) - eval(leftSide))
             if eval(leftSide) == 0:
                 answer = answer * -1
@@ -47,9 +53,15 @@ def calculations(spaceRemovedStr : str):
             leftSide = leftSide.replace(var, "1")
             answer = (eval(rightSide) / eval(leftSide))
         else:
-            leftSide = leftSide.replace(var, "")
+            leftSide = leftSide.replace(leftSide[leftSide.find(operatorOfVar) : leftSide.find(var) + 1], "1")
             answer = (eval(rightSide) / eval(leftSide)) 
-    return answer,operatorOfVar
+    if operatorOfVar == '-':
+        answer = answer * 1
+    if operatorOfVar == '/':
+            answer = 1 / answer
+    if numOfVar != '':
+        answer = answer/eval(numOfVar)
+    return float(answer)
 
 def variable(spaceRemovedStr : str):
     var : str = ""
@@ -58,5 +70,4 @@ def variable(spaceRemovedStr : str):
             var += x
         else:
             continue
-    print("Value of " + var + " is equal to:")
     return var
