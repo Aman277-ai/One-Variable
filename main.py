@@ -1,5 +1,4 @@
-import SpaceRemover,Calculations
-import os
+import SpaceRemover,Calculations, os
 os.system("cls")
 
 inputStr = input("Enter the equation with only one variable: ")
